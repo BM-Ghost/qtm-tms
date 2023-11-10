@@ -26,10 +26,11 @@ func handleUpdateMessage(parts []string, conn net.Conn) {
 	// Handle the update message here, for example, you can log or process the data.
 
 	// Construct the response
-	serverPublicIP := "3.6.115.64"
-	thisPort := "10056"
+	serverPublicIP := "3.6.122.107"
+	thisPort := "12784"
 	numberOfFiles := "1"
 	dirPath := "/dummy"
+	log.Printf("1|%s|%s|%s|%s|%s|test\n", serverPublicIP, thisPort, numberOfFiles, dirPath, fullSerialNumber)
 	response := fmt.Sprintf("1|%s|%s|%s|%s|%s|test", serverPublicIP, thisPort, numberOfFiles, dirPath, fullSerialNumber)
 
 	// Send the response to the client
@@ -40,19 +41,20 @@ func handleUpdateMessage(parts []string, conn net.Conn) {
 }
 
 func handleUpdateNotification(parts []string) {
-	if len(parts) != 6 {
+	log.Print(len(parts))
+	if len(parts) < 5 {
 		log.Println("Invalid message format for update notification: expected 5 sections")
 		return
 	}
 
-	//transactionType := parts[0]
-	//countOfDownloadedFiles := parts[1]
-	//status := parts[2]
-	//timeTaken := parts[3]
+	transactionType := parts[0]
+	countOfDownloadedFiles := parts[1]
+	status := parts[2]
+	timeTaken := parts[3]
 	terminalSerial := parts[4]
-
+	log.Printf("Trac type" + transactionType + "with a status of " + status + "files downloaded " + countOfDownloadedFiles + "timetaken " + timeTaken)
 	// Log the request with date, time, serial number, and request type
-	log.Printf("[%s] Serial Number: %s - Received Update Notification Request\n", time.Now().Format("2006-01-02 15:04:05"), terminalSerial)
+	log.Printf("[%s] Serial Number: %responses - Received Update Notification Request\n", time.Now().Format("2023-11-07 10:30:05"), terminalSerial)
 
 	// Handle the update notification here, for example, you can log or process the data.
 }
@@ -81,12 +83,14 @@ func handleConnection(conn net.Conn) {
 	if transactionType == "1" {
 		// If the transaction type is 1, handle it as an update message.
 		handleUpdateMessage(parts, conn)
+
 	} else if transactionType == "2" {
 		// If the transaction type is 2, handle it as an update notification.
 		handleUpdateNotification(parts)
 	} else {
 		log.Println("Unsupported transaction type:", transactionType)
 	}
+
 }
 
 func main() {
@@ -109,6 +113,7 @@ func main() {
 			log.Println("Failed to accept connection:", err)
 			continue
 		}
+		println("Handling socker...")
 		go handleConnection(conn)
 	}
 }
