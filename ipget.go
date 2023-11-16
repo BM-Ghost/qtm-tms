@@ -26,10 +26,10 @@ func handleUpdateMessage(parts []string, conn net.Conn) {
 	// Handle the update message here, for example, you can log or process the data.
 
 	// Construct the response
-	serverPublicIP := "3.6.122.107"
-	thisPort := "12784"
+	serverPublicIP := "167.99.33.213"
+	thisPort := "8000"
 	numberOfFiles := "1"
-	dirPath := "/dummy"
+	dirPath := "/203037333301059417812603"
 	log.Printf("1|%s|%s|%s|%s|%s|test\n", serverPublicIP, thisPort, numberOfFiles, dirPath, fullSerialNumber)
 	response := fmt.Sprintf("1|%s|%s|%s|%s|%s|test", serverPublicIP, thisPort, numberOfFiles, dirPath, fullSerialNumber)
 
@@ -73,7 +73,7 @@ func handleConnection(conn net.Conn) {
 		log.Println("Failed to read from client:", err)
 		return
 	}
-
+	println(data)
 	// Split the received data by the pipe character '|'
 	parts := strings.Split(strings.TrimSpace(data), "|")
 
