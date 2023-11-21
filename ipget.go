@@ -27,7 +27,7 @@ func handleUpdateMessage(parts []string, conn net.Conn) {
 
 	// Construct the response
 	serverPublicIP := "167.99.33.213"
-	thisPort := "8000"
+	thisPort := "2121"
 	numberOfFiles := "1"
 	dirPath := "/203037333301059417812603"
 	log.Printf("1|%s|%s|%s|%s|%s|test\n", serverPublicIP, thisPort, numberOfFiles, dirPath, fullSerialNumber)
@@ -43,16 +43,16 @@ func handleUpdateMessage(parts []string, conn net.Conn) {
 func handleUpdateNotification(parts []string) {
 	log.Print(len(parts))
 	if len(parts) < 5 {
-		log.Println("Invalid message format for update notification: expected 5 sections")
+		//log.Println("Invalid message format for update notification: expected 5 sections")
 		return
 	}
 
-	transactionType := parts[0]
-	countOfDownloadedFiles := parts[1]
-	status := parts[2]
-	timeTaken := parts[3]
+	//transactionType := parts[0]
+	//countOfDownloadedFiles := parts[1]
+	//status := parts[2]
+	//timeTaken := parts[3]
 	terminalSerial := parts[4]
-	log.Printf("Trac type" + transactionType + "with a status of " + status + "files downloaded " + countOfDownloadedFiles + "timetaken " + timeTaken)
+	//log.Printf("Trac type" + transactionType + "with a status of " + status + "files downloaded " + countOfDownloadedFiles + "timetaken " + timeTaken)
 	// Log the request with date, time, serial number, and request type
 	log.Printf("[%s] Serial Number: %responses - Received Update Notification Request\n", time.Now().Format("2023-11-07 10:30:05"), terminalSerial)
 
@@ -94,7 +94,7 @@ func handleConnection(conn net.Conn) {
 }
 
 func main() {
-	listener, err := net.Listen("tcp", "localhost:8099")
+	listener, err := net.Listen("tcp", ":8099")
 	if err != nil {
 		log.Fatalln("Failed to start server:", err)
 		return
